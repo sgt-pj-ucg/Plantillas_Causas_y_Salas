@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+  Plataforma de Archivo de Plantillas Institucionales
+  Creado por Juan Carlos Olave Soto — Unidad de Control de Gestión (UCG)
+  Iltma. Corte de Apelaciones de La Serena — 2026
+-->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -326,6 +331,13 @@
     .panel-cuerpo{padding:18px}
     .panel-pie{padding:14px 18px 18px}
   }
+  /* ═══ FIRMA / AUTORÍA ═══ */
+  .firma-jc{position:fixed;bottom:18px;right:18px;z-index:20;width:34px;height:34px;border-radius:50%;
+    background:var(--surface);border:1.5px solid var(--border-2);color:var(--txt-2);
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;letter-spacing:.02em;
+    cursor:pointer;box-shadow:var(--sh-sm);transition:.2s var(--e);opacity:.55}
+  .firma-jc:hover{opacity:1;transform:translateY(-2px);box-shadow:var(--sh);border-color:var(--accent);color:var(--accent)}
+  @media(max-width:720px){ .firma-jc{bottom:14px;right:14px;width:30px;height:30px;font-size:10px} }
 </style>
 </head>
 <body>
@@ -488,6 +500,9 @@
 </div>
 
 <!-- ═══ TOAST ═══ -->
+<!-- ═══ FIRMA / AUTORÍA ═══ -->
+<div class="firma-jc" id="firmaJC" title="Creado por Juan Carlos Olave Soto · 2026" aria-label="Creado por Juan Carlos Olave Soto, 2026">JC</div>
+
 <div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><span id="toast-txt"></span></div>
 
 <!-- ═══ LOGIN ═══ -->
@@ -984,6 +999,10 @@ function toast(msg){
   document.getElementById("toast-txt").textContent=msg;
   $t.classList.add("on"); clearTimeout(tTimer); tTimer=setTimeout(()=>$t.classList.remove("on"),2600);
 }
+
+document.getElementById("firmaJC").addEventListener("click",()=>{
+  toast("Creado por Juan Carlos Olave Soto · 2026");
+});
 
 /* ─── Búsqueda ─── */
 let deb=null;
