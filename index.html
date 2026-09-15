@@ -709,7 +709,16 @@ function render(){
 
   $grilla.innerHTML=lista.map((p,i)=>{
     const tituloH=resaltar(escaparHTML(p.titulo),tVis);
-    const base=(p.descripcion&&p.descripcion.trim())?p.descripcion:fragmentoRelevante(p.cuerpo,tNorm);
+    let base;
+    if(p.descripcion&&p.descripcion.trim()){
+      // Si hay búsqueda activa y el término no aparece en la descripción,
+      // mostramos igual el fragmento del cuerpo donde SÍ se encontró.
+      const descNorm=normalizar(p.descripcion);
+      const coincideEnDescripcion=!tNorm.length||tNorm.some(x=>descNorm.includes(x));
+      base=coincideEnDescripcion?p.descripcion:fragmentoRelevante(p.cuerpo,tNorm);
+    }else{
+      base=fragmentoRelevante(p.cuerpo,tNorm);
+    }
     const fragH=resaltar(escaparHTML(base),tVis);
     const folioH=resaltar(escaparHTML(p.folio),tVis);
     const fav=esFav(p);
@@ -956,7 +965,14 @@ function mostrarVista(el,id){
   badge.className="badge "+(CLASE_BADGE[p.tipo]||"b-otro");
   badge.innerHTML=iconoTipo(p.tipo)+escaparHTML(p.tipo);
   document.getElementById("qv-titulo").innerHTML=resaltar(escaparHTML(p.titulo),tVis);
-  const base=(p.descripcion&&p.descripcion.trim())?p.descripcion:(p.cuerpo||"");
+  let base;
+  if(p.descripcion&&p.descripcion.trim()){
+    const descNorm=normalizar(p.descripcion);
+    const coincideEnDescripcion=!tNorm.length||tNorm.some(x=>descNorm.includes(x));
+    base=coincideEnDescripcion?p.descripcion:(p.cuerpo||"");
+  }else{
+    base=p.cuerpo||"";
+  }
   const $cuerpo=document.getElementById("qv-cuerpo");
   $cuerpo.innerHTML=resaltar(escaparHTML(base),tVis);
   $cuerpo.scrollTop=0;
