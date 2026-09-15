@@ -842,10 +842,14 @@ function abrirPanel(id){
   const p=PLANTILLAS.find(x=>x.id===id); if(!p) return;
   actual=p;
   document.getElementById("p-ref").textContent=p.folio+" \u00b7 "+p.tipo;
-  document.getElementById("p-titulo").textContent=p.titulo;
   document.getElementById("p-fecha").textContent=fmtFechaAbs(p.fecha);
   document.getElementById("p-unidad").textContent=p.unidad;
-  document.getElementById("p-cuerpo").innerHTML=escaparHTML(p.cuerpo).replace(/(\[[^\]]+\])/g,"<strong>$1</strong>");
+  // Sigue resaltando la(s) palabra(s) buscada(s) también dentro del documento completo.
+  const tVisPanel=consulta.split(/\s+/).filter(Boolean);
+  document.getElementById("p-titulo").innerHTML=resaltar(escaparHTML(p.titulo),tVisPanel);
+  let cuerpoConResaltado=resaltar(escaparHTML(p.cuerpo),tVisPanel);
+  cuerpoConResaltado=cuerpoConResaltado.replace(/(\[[^\]]+\])/g,"<strong>$1</strong>");
+  document.getElementById("p-cuerpo").innerHTML=cuerpoConResaltado;
   document.getElementById("enviarCorreo").style.display = (p.tipo==="Correo") ? "flex" : "none";
   const esPdf=(p.extension||"").toLowerCase()==="pdf";
   document.getElementById("descargar-lbl").textContent = esPdf ? "Descargar PDF" : "Descargar Word editable";
