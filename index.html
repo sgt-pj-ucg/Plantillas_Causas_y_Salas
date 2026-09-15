@@ -344,8 +344,9 @@
   .firma-jc-txt{font-size:10.5px;color:var(--txt-3);font-weight:600;letter-spacing:.01em;white-space:nowrap;
     background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:5px 11px;
     opacity:0;transform:translateX(6px);transition:.22s var(--e);pointer-events:none;box-shadow:var(--sh-sm)}
-  .firma-jc-wrap:hover .firma-jc-ic{opacity:1;border-color:var(--accent);color:var(--accent)}
-  .firma-jc-wrap:hover .firma-jc-txt{opacity:.9;transform:translateX(0)}
+  .firma-jc-wrap:hover .firma-jc-ic{opacity:1;border-color:var(--accent);color:var(--accent);
+    cursor:url("data:image/png;base64,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") 16 16,pointer}
+  .firma-jc-wrap.on .firma-jc-txt{opacity:.9;transform:translateX(0)}
   @media(max-width:720px){ .firma-jc-wrap{bottom:14px;right:14px} .firma-jc-ic{width:28px;height:28px;font-size:9.5px} }
 </style>
 </head>
@@ -513,7 +514,7 @@
 
 <!-- ═══ TOAST ═══ -->
 <!-- ═══ FIRMA / AUTORÍA ═══ -->
-<div class="firma-jc-wrap" id="firmaJC" title="Creado por Juan Carlos Olave Soto · 2026">
+<div class="firma-jc-wrap" id="firmaJC">
   <span class="firma-jc-txt">Juan Carlos Olave · 2026</span>
   <span class="firma-jc-ic">JC</span>
 </div>
@@ -1190,6 +1191,16 @@ document.getElementById("reintentar").addEventListener("click",cargarCatalogo);
 
 /* Botón "Actualizar catálogo": fuerza una sincronización inmediata con Drive
    (documentos nuevos/editados/eliminados directo en Drive, sin esperar). */
+/* Firma: el texto solo se revela con un clic (no al pasar el mouse);
+   al pasar el mouse solo cambia el cursor (ver CSS). Un clic afuera lo cierra. */
+document.getElementById("firmaJC").addEventListener("click",(e)=>{
+  e.stopPropagation();
+  document.getElementById("firmaJC").classList.toggle("on");
+});
+document.addEventListener("click",()=>{
+  document.getElementById("firmaJC").classList.remove("on");
+});
+
 document.getElementById("actualizarCatalogo").addEventListener("click",async()=>{
   if(!subidaDisponible()){ toast("Disponible solo con el archivo real conectado."); return; }
   const $btn=document.getElementById("actualizarCatalogo");
