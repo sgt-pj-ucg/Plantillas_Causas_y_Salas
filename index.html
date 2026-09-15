@@ -263,6 +263,9 @@
   .icon-btn{flex:none;border:1px solid var(--border-2);background:var(--surface);color:var(--txt-2);width:44px;height:44px;border-radius:11px;cursor:pointer;display:grid;place-items:center;transition:.16s}
   .icon-btn:hover{background:var(--bg);color:var(--txt)}
   .icon-btn svg{width:19px;height:19px}
+  .icon-btn.girando{color:var(--accent);pointer-events:none}
+  .icon-btn.girando svg{animation:girar-icono .8s linear infinite}
+  @keyframes girar-icono{to{transform:rotate(360deg)}}
   .ic-luna{display:none}
   [data-theme="dark"] .ic-sol{display:none}
   [data-theme="dark"] .ic-luna{display:block}
@@ -331,13 +334,19 @@
     .panel-cuerpo{padding:18px}
     .panel-pie{padding:14px 18px 18px}
   }
-  /* ═══ FIRMA / AUTORÍA ═══ */
-  .firma-jc{position:fixed;bottom:18px;right:18px;z-index:20;width:34px;height:34px;border-radius:50%;
+  /* ═══ FIRMA / AUTORÍA (discreta: el texto aparece solo al pasar el mouse) ═══ */
+  .firma-jc-wrap{position:fixed;bottom:18px;right:18px;z-index:20;display:flex;align-items:center;gap:8px;
+    pointer-events:auto}
+  .firma-jc-ic{width:32px;height:32px;flex:none;border-radius:50%;
     background:var(--surface);border:1.5px solid var(--border-2);color:var(--txt-2);
-    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;letter-spacing:.02em;
-    cursor:pointer;box-shadow:var(--sh-sm);transition:.2s var(--e);opacity:.55}
-  .firma-jc:hover{opacity:1;transform:translateY(-2px);box-shadow:var(--sh);border-color:var(--accent);color:var(--accent)}
-  @media(max-width:720px){ .firma-jc{bottom:14px;right:14px;width:30px;height:30px;font-size:10px} }
+    display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;letter-spacing:.02em;
+    box-shadow:var(--sh-sm);transition:.2s var(--e);opacity:.5}
+  .firma-jc-txt{font-size:10.5px;color:var(--txt-3);font-weight:600;letter-spacing:.01em;white-space:nowrap;
+    background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:5px 11px;
+    opacity:0;transform:translateX(6px);transition:.22s var(--e);pointer-events:none;box-shadow:var(--sh-sm)}
+  .firma-jc-wrap:hover .firma-jc-ic{opacity:1;border-color:var(--accent);color:var(--accent)}
+  .firma-jc-wrap:hover .firma-jc-txt{opacity:.9;transform:translateX(0)}
+  @media(max-width:720px){ .firma-jc-wrap{bottom:14px;right:14px} .firma-jc-ic{width:28px;height:28px;font-size:9.5px} }
 </style>
 </head>
 <body>
@@ -360,6 +369,9 @@
     <button class="icon-btn" id="toggleTema" title="Modo claro / oscuro" aria-label="Cambiar tema">
       <svg class="ic-sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
       <svg class="ic-luna" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+    </button>
+    <button class="icon-btn" id="actualizarCatalogo" title="Actualizar catálogo (vuelve a leer la carpeta de Drive)" aria-label="Actualizar catálogo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
     </button>
     <button class="btn-ingresar" id="abrirSubir">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
@@ -501,7 +513,10 @@
 
 <!-- ═══ TOAST ═══ -->
 <!-- ═══ FIRMA / AUTORÍA ═══ -->
-<div class="firma-jc" id="firmaJC" title="Creado por Juan Carlos Olave Soto · 2026" aria-label="Creado por Juan Carlos Olave Soto, 2026">JC</div>
+<div class="firma-jc-wrap" id="firmaJC" title="Creado por Juan Carlos Olave Soto · 2026">
+  <span class="firma-jc-txt">Juan Carlos Olave · 2026</span>
+  <span class="firma-jc-ic">JC</span>
+</div>
 
 <div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg><span id="toast-txt"></span></div>
 
@@ -578,7 +593,7 @@ const CONFIG = {
 // Versión mínima de Codigo.gs que esta página espera (debe coincidir con
 // CONFIG.VERSION_BACKEND en el Apps Script). Si el backend responde con una
 // versión menor (o sin versión), se avisa en pantalla que hay que actualizarlo.
-const VERSION_FRONTEND_REQUIERE=4;
+const VERSION_FRONTEND_REQUIERE=5;
 function revisarVersionBackend(respuesta){
   const version=(respuesta && typeof respuesta.version==="number")?respuesta.version:0;
   const $av=document.getElementById("avisoBackend");
@@ -1016,10 +1031,6 @@ function toast(msg){
   $t.classList.add("on"); clearTimeout(tTimer); tTimer=setTimeout(()=>$t.classList.remove("on"),2600);
 }
 
-document.getElementById("firmaJC").addEventListener("click",()=>{
-  toast("Creado por Juan Carlos Olave Soto · 2026");
-});
-
 /* ─── Búsqueda ─── */
 let deb=null;
 function onInput(v){
@@ -1176,6 +1187,29 @@ document.getElementById("enviarSubir").addEventListener("click",async()=>{
 
 /* ═══ ARRANQUE ═══ */
 document.getElementById("reintentar").addEventListener("click",cargarCatalogo);
+
+/* Botón "Actualizar catálogo": fuerza una sincronización inmediata con Drive
+   (documentos nuevos/editados/eliminados directo en Drive, sin esperar). */
+document.getElementById("actualizarCatalogo").addEventListener("click",async()=>{
+  if(!subidaDisponible()){ toast("Disponible solo con el archivo real conectado."); return; }
+  const $btn=document.getElementById("actualizarCatalogo");
+  if($btn.disabled) return;
+  $btn.disabled=true;
+  $btn.classList.add("girando");
+  try{
+    const data=await apiPost("listar",{refresh:true});
+    const arr=data.plantillas||[];
+    if(!Array.isArray(arr)) throw new Error("Respuesta inválida del servidor");
+    PLANTILLAS=normalizarRegistros(arr);
+    pintarCatalogo();
+    toast("Catálogo actualizado: "+PLANTILLAS.length+" documento"+(PLANTILLAS.length===1?"":"s"));
+  }catch(err){
+    toast(err.codigo==="CLAVE" ? "La sesión expiró. Vuelve a entrar." : ("No se pudo actualizar: "+err.message));
+  }finally{
+    $btn.disabled=false;
+    $btn.classList.remove("girando");
+  }
+});
 document.getElementById("verDemo").addEventListener("click",()=>{ ocultarLogin(); const a=document.getElementById("avisoDemo"); if(a) a.style.display="flex"; usarDemo(); });
 
 function iniciar(){
