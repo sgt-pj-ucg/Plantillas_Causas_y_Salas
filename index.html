@@ -247,6 +247,20 @@
   .acceso-error{color:#FF8A8A;font-size:13px;min-height:18px;margin:10px 0 0!important;text-align:left;font-weight:500}
   .acceso-btn{width:100%;margin-top:16px;height:48px;box-shadow:0 10px 26px rgba(79,70,229,.4)}
 
+  /* ═══ SELECCIÓN DE SECCIÓN (Causas / Salas) ═══ */
+  .selector-card{max-width:520px}
+  .selector-opciones{display:flex;gap:14px;margin-top:6px}
+  .selector-opcion{flex:1;display:flex;flex-direction:column;align-items:center;gap:9px;
+    background:rgba(10,18,38,.4);border:1.5px solid rgba(255,255,255,.1);border-radius:16px;
+    padding:22px 14px 20px;cursor:pointer;font-family:inherit;color:#F2F4FB;
+    transition:.18s var(--e),transform .18s var(--e)}
+  .selector-opcion svg{width:30px;height:30px;color:#8FA3D6;transition:.18s}
+  .selector-opcion-titulo{font-size:15.5px;font-weight:800;letter-spacing:-.01em}
+  .selector-opcion-texto{font-size:12px;color:#A9B6D6;line-height:1.4;text-align:center}
+  .selector-opcion:hover{border-color:#7C8FFF;background:rgba(79,70,229,.14);transform:translateY(-3px)}
+  .selector-opcion:hover svg{color:#B7C3FF}
+  @media(max-width:520px){ .selector-opciones{flex-direction:column} }
+
   /* ═══ MODAL SUBIR ═══ */
   .panel-subir .campo{margin-bottom:18px}
   .campo label{display:block;font-size:13px;font-weight:700;color:var(--txt);margin-bottom:7px}
@@ -374,7 +388,7 @@
   <div class="topbar-in">
     <a class="brand" href="#">
       <span class="brand-ic"></span>
-      <span class="brand-tx"><b>Plantillas Causas y Salas</b><i>Corte de Apelaciones de La Serena</i></span>
+      <span class="brand-tx"><b id="brandTitulo">Plantillas Causas y Salas</b><i>Corte de Apelaciones de La Serena</i></span>
     </a>
 
     <div class="search">
@@ -384,6 +398,9 @@
       <button class="btn-x" id="limpiar" aria-label="Limpiar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
 
+    <button class="icon-btn" id="cambiarSeccion" title="Cambiar de sección (Causas / Salas)" aria-label="Cambiar de sección">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
+    </button>
     <button class="icon-btn" id="toggleTema" title="Modo claro / oscuro" aria-label="Cambiar tema">
       <svg class="ic-sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
       <svg class="ic-luna" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
@@ -555,6 +572,31 @@
   </div>
 </div>
 
+<!-- ═══ SELECCIÓN DE SECCIÓN (Causas / Salas) ═══ -->
+<!-- Aparece justo después de la clave; permite elegir a cuál de las dos
+     carpetas independientes entrar. Se puede volver a abrir después con el
+     botón de la barra superior, sin volver a pedir la clave. -->
+<div class="acceso" id="selector" style="display:none">
+  <div class="acceso-card selector-card">
+    <div class="acceso-ic"></div>
+    <div class="acceso-eyebrow">Unidad de Causas y Salas</div>
+    <h2>¿A qué sección quieres entrar?</h2>
+    <p>Cada una tiene su propio archivo de documentos, independiente de la otra.</p>
+    <div class="selector-opciones">
+      <button type="button" class="selector-opcion" data-seccion="causas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M6.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L6.5 7zM17.5 7l-2.2 5.5a3 3 0 0 0 4.4 0L17.5 7zM8 21h8"/></svg>
+        <span class="selector-opcion-titulo">Causas</span>
+        <span class="selector-opcion-texto">Plantillas y documentos de causas judiciales.</span>
+      </button>
+      <button type="button" class="selector-opcion" data-seccion="salas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M14 12h.01"/></svg>
+        <span class="selector-opcion-titulo">Salas</span>
+        <span class="selector-opcion-texto">Plantillas y documentos de salas de audiencia.</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ MODAL SUBIR ═══ -->
 <div class="telon" id="telonSubir"></div>
 <aside class="panel panel-subir" id="panelSubir" role="dialog" aria-modal="true" aria-labelledby="subir-titulo">
@@ -612,7 +654,7 @@ const CONFIG = {
 // Versión mínima de Codigo.gs que esta página espera (debe coincidir con
 // CONFIG.VERSION_BACKEND en el Apps Script). Si el backend responde con una
 // versión menor (o sin versión), se avisa en pantalla que hay que actualizarlo.
-const VERSION_FRONTEND_REQUIERE=5;
+const VERSION_FRONTEND_REQUIERE=6;
 function revisarVersionBackend(respuesta){
   const version=(respuesta && typeof respuesta.version==="number")?respuesta.version:0;
   const $av=document.getElementById("avisoBackend");
@@ -1079,6 +1121,8 @@ document.addEventListener("keydown",e=>{
 
 /* ═══ DATOS / API ═══ */
 let claveSesion="";
+let seccionActual=""; // "causas" o "salas" — elegida en la pantalla de selección
+const NOMBRE_SECCION={ causas:"Causas", salas:"Salas" };
 function mostrarEstado(estado){
   $cargando.style.display="none";
   $errorCarga.style.display = estado==="error" ? "block" : "none";
@@ -1086,7 +1130,7 @@ function mostrarEstado(estado){
   if(estado==="cargando"){ $vacio.classList.remove("on"); pintarSkeletons(); }
 }
 async function apiPost(action,extra){
-  const cuerpo=Object.assign({action:action,clave:claveSesion},extra||{});
+  const cuerpo=Object.assign({action:action,clave:claveSesion,seccion:seccionActual},extra||{});
   const resp=await fetch(CONFIG.API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(cuerpo)});
   if(!resp.ok) throw new Error("HTTP "+resp.status);
   const data=await resp.json();
@@ -1118,6 +1162,34 @@ function usarDemo(){
   PLANTILLAS=JSON.parse(JSON.stringify(PLANTILLAS_DEMO)); pintarCatalogo();
 }
 
+/* ─── Selección de sección (Causas / Salas) ─── */
+const $selector=document.getElementById("selector");
+function actualizarMarcaSeccion(){
+  const $b=document.getElementById("brandTitulo");
+  if($b) $b.textContent = seccionActual ? ("Plantillas "+NOMBRE_SECCION[seccionActual]) : "Plantillas Causas y Salas";
+}
+function mostrarSelector(){
+  $selector.style.display="flex";
+  $selector.classList.remove("saliendo");
+}
+function ocultarSelector(){
+  $selector.classList.add("saliendo");
+  setTimeout(()=>{ $selector.style.display="none"; $selector.classList.remove("saliendo"); }, 430);
+}
+document.querySelectorAll(".selector-opcion").forEach($op=>{
+  $op.addEventListener("click",async()=>{
+    seccionActual=$op.dataset.seccion;
+    actualizarMarcaSeccion();
+    ocultarSelector();
+    await cargarCatalogo();
+  });
+});
+document.getElementById("cambiarSeccion").addEventListener("click",()=>{
+  if(!subidaDisponible()){ toast("Disponible solo con el archivo real conectado."); return; }
+  if($panel.classList.contains("on")) cerrarPanel();
+  mostrarSelector();
+});
+
 /* ─── Login ─── */
 const $acceso=document.getElementById("acceso");
 const $claveInput=document.getElementById("claveInput");
@@ -1144,7 +1216,7 @@ async function intentarEntrar(){
     $btn.textContent="\u00a1Listo! \u2713";
     await new Promise(r=>setTimeout(r,320));
     ocultarLogin();
-    await cargarCatalogo();
+    mostrarSelector();
   }catch(err){
     claveSesion="";
     mostrarLogin();
