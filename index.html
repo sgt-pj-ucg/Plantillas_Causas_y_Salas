@@ -207,38 +207,44 @@
   footer .f{font-size:11.5px;letter-spacing:.03em;color:var(--txt-3);font-weight:500}
 
   /* ═══ LOGIN ═══ */
-  /* Fondo siempre claro (independiente del tema oscuro/claro de la app). */
+  /* Fondo siempre oscuro y con efecto vidrio (independiente del tema claro/oscuro de la app). */
   .acceso{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:24px;
-    background:linear-gradient(160deg,#F7F8FC,#EEF0FB);opacity:1;transform:scale(1);
-    transition:opacity .42s var(--e),transform .42s var(--e)}
+    background:
+      radial-gradient(1100px 750px at 18% -8%,#1B3A73 0%,transparent 55%),
+      radial-gradient(950px 700px at 88% 108%,#15295A 0%,transparent 55%),
+      linear-gradient(165deg,#0B1730,#080F22);
+    opacity:1;transform:scale(1);transition:opacity .42s var(--e),transform .42s var(--e)}
   .acceso.saliendo{opacity:0;transform:scale(1.035);pointer-events:none}
-  .acceso::before{content:"";position:absolute;inset:0;opacity:1;overflow:hidden;
-    background:radial-gradient(650px 380px at 20% 10%,rgba(79,70,229,.14),transparent 60%),radial-gradient(550px 360px at 88% 90%,rgba(99,102,241,.10),transparent 60%);
+  .acceso::before{content:"";position:absolute;inset:0;opacity:.9;overflow:hidden;
+    background:radial-gradient(600px 380px at 25% 15%,rgba(99,133,255,.14),transparent 60%),radial-gradient(520px 360px at 85% 85%,rgba(79,70,229,.16),transparent 60%);
     animation:flotar-fondo-acceso 16s ease-in-out infinite}
   @keyframes flotar-fondo-acceso{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(1.5%,-2.5%) scale(1.06)}}
-  .acceso-card{position:relative;width:100%;max-width:390px;background:#FFFFFF;border-radius:22px;padding:40px 32px 32px;
-    text-align:center;box-shadow:0 30px 70px rgba(15,23,42,.16),0 2px 10px rgba(15,23,42,.06);animation:pop .5s var(--e) both}
-  .acceso-ic{width:78px;height:78px;border-radius:23px;background:var(--emblema) center/72% no-repeat, #FFFFFF;
+  .acceso-card{position:relative;width:100%;max-width:390px;background:rgba(30,42,74,.5);backdrop-filter:blur(22px) saturate(1.3);-webkit-backdrop-filter:blur(22px) saturate(1.3);
+    border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:40px 32px 32px;
+    text-align:center;box-shadow:0 34px 80px rgba(0,0,0,.45),0 2px 12px rgba(0,0,0,.25);animation:pop .5s var(--e) both}
+  .acceso-ic{width:108px;height:108px;background:var(--emblema) center/100% no-repeat;
     display:grid;place-items:center;margin:0 auto 20px;
-    box-shadow:0 12px 28px rgba(79,70,229,.22),0 0 0 1px rgba(15,23,42,.045);
+    filter:drop-shadow(0 10px 22px rgba(79,110,255,.4));
     animation:flotar-icono-acceso 4.2s ease-in-out infinite}
   @keyframes flotar-icono-acceso{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-  .acceso-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#94A0B8;font-weight:700;margin-bottom:9px;
+  .acceso-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8FA3D6;font-weight:700;margin-bottom:9px;
     animation:acceso-aparecer .5s .08s var(--e) both}
-  .acceso-card h2{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:9px;color:#0F172A;
+  .acceso-card h2{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:9px;color:#FFFFFF;
     animation:acceso-aparecer .5s .14s var(--e) both}
-  .acceso-card p{font-size:13.5px;color:#5B657A;margin-bottom:24px;line-height:1.5;
+  .acceso-card p{font-size:13.5px;color:#A9B6D6;margin-bottom:22px;line-height:1.5;
     animation:acceso-aparecer .5s .2s var(--e) both}
   @keyframes acceso-aparecer{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-  .acceso-campo{display:flex;align-items:center;background:#FFFFFF;border:1.5px solid #DDE1EA;border-radius:12px;
+  .acceso-label{display:block;text-align:left;font-size:12.5px;font-weight:700;color:#C7D0EA;margin-bottom:8px}
+  .acceso-campo{display:flex;align-items:center;background:rgba(10,18,38,.55);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;
     padding:0 4px 0 15px;height:50px;transition:border-color .18s,box-shadow .18s}
-  .acceso-campo:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px rgba(79,70,229,.12)}
-  #claveInput{flex:1;border:none;outline:none;background:transparent;font-family:inherit;font-size:15px;height:100%;color:#0F172A}
-  #verClave{border:none;background:transparent;color:#94A0B8;width:38px;height:38px;border-radius:9px;cursor:pointer;display:grid;place-items:center;transition:.15s}
-  #verClave:hover{background:#F1F3F9}
+  .acceso-campo:focus-within{border-color:#7C8FFF;box-shadow:0 0 0 4px rgba(99,133,255,.16)}
+  #claveInput{flex:1;border:none;outline:none;background:transparent;font-family:inherit;font-size:15px;height:100%;color:#F2F4FB}
+  #claveInput::placeholder{color:#6B7794}
+  #verClave{border:none;background:transparent;color:#8792AE;width:38px;height:38px;border-radius:9px;cursor:pointer;display:grid;place-items:center;transition:.15s}
+  #verClave:hover{background:rgba(255,255,255,.08);color:#C7D0EA}
   #verClave svg{width:18px;height:18px}
-  .acceso-error{color:var(--red);font-size:13px;min-height:18px;margin:10px 0 0!important;text-align:left;font-weight:500}
-  .acceso-btn{width:100%;margin-top:16px;height:48px}
+  .acceso-error{color:#FF8A8A;font-size:13px;min-height:18px;margin:10px 0 0!important;text-align:left;font-weight:500}
+  .acceso-btn{width:100%;margin-top:16px;height:48px;box-shadow:0 10px 26px rgba(79,70,229,.4)}
 
   /* ═══ MODAL SUBIR ═══ */
   .panel-subir .campo{margin-bottom:18px}
@@ -538,8 +544,9 @@
     <div class="acceso-eyebrow">Archivo documental interno</div>
     <h2>Unidad de Causas y Salas</h2>
     <p>Ingresa la clave de la Unidad para acceder al archivo.</p>
+    <label class="acceso-label" for="claveInput">Clave de acceso</label>
     <div class="acceso-campo">
-      <input id="claveInput" type="password" placeholder="Clave de acceso" autocomplete="off" spellcheck="false">
+      <input id="claveInput" type="password" placeholder="Ingresa tu clave" autocomplete="off" spellcheck="false">
       <button id="verClave" type="button" aria-label="Mostrar u ocultar clave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button>
     </div>
     <p class="acceso-error" id="accesoError"></p>
