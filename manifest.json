@@ -1,0 +1,14 @@
+{
+  "name": "Plantillas Causas y Salas",
+  "short_name": "Causas y Salas",
+  "description": "Archivo de plantillas y documentos de la Unidad de Causas y Salas — Corte de Apelaciones de La Serena.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0F2A4A",
+  "theme_color": "#0F2A4A",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
