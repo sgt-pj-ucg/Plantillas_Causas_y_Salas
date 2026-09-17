@@ -209,18 +209,15 @@
   /* ═══ LOGIN ═══ */
   /* Fondo siempre oscuro y con efecto vidrio (independiente del tema claro/oscuro de la app). */
   .acceso{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:24px;
-    background:
-      radial-gradient(1100px 750px at 18% -8%,#1D3A72 0%,transparent 55%),
-      radial-gradient(950px 700px at 88% 108%,#17294F 0%,transparent 55%),
-      linear-gradient(165deg,#0C1730,#081120);
+    background: radial-gradient(circle at 30% 20%, #1B4570 0%, #0F2A4A 60%);
     opacity:1;transform:scale(1);transition:opacity .42s var(--e),transform .42s var(--e)}
   .acceso.saliendo{opacity:0;transform:scale(1.035);pointer-events:none}
   .acceso::before{content:"";position:absolute;inset:0;opacity:.9;overflow:hidden;
     background:radial-gradient(600px 380px at 25% 15%,rgba(99,133,255,.14),transparent 60%),radial-gradient(520px 360px at 85% 85%,rgba(79,70,229,.16),transparent 60%);
     animation:flotar-fondo-acceso 16s ease-in-out infinite}
   @keyframes flotar-fondo-acceso{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(1.5%,-2.5%) scale(1.06)}}
-  .acceso-card{position:relative;width:100%;max-width:390px;background:rgba(40,55,94,.55);backdrop-filter:blur(22px) saturate(1.3);-webkit-backdrop-filter:blur(22px) saturate(1.3);
-    border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:40px 32px 32px;
+  .acceso-card{position:relative;width:100%;max-width:390px;background:rgba(255,255,255,.07);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);
+    border:1px solid rgba(255,255,255,.16);border-radius:22px;padding:40px 32px 32px;
     text-align:center;box-shadow:0 34px 80px rgba(0,0,0,.45),0 2px 12px rgba(0,0,0,.25);animation:pop .5s var(--e) both}
   .acceso-ic{position:relative;width:150px;height:150px;background:var(--emblema) center/100% no-repeat;
     display:grid;place-items:center;margin:0 auto 20px;
