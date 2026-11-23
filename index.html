@@ -1152,14 +1152,21 @@ function normalizarRegistros(arr){
 function pintarCatalogo(){
   asignarFolios(PLANTILLAS); mostrarEstado("ok"); construirFiltros(); render();
 }
+// Token de carga: evita que una respuesta lenta y ya obsoleta (p.ej. de la
+// secci\u00f3n anterior, si el usuario cambi\u00f3 de secci\u00f3n antes de que respondiera)
+// sobrescriba el cat\u00e1logo de la secci\u00f3n que est\u00e1 visible ahora.
+let tokenCarga=0;
 async function cargarCatalogo(){
   mostrarEstado("cargando");
+  const miToken=++tokenCarga;
   try{
     const data=await apiPost("listar");
+    if(miToken!==tokenCarga) return; // ya hay una carga m\u00e1s nueva en curso: se descarta esta
     const arr=data.plantillas||[];
     if(!Array.isArray(arr)) throw new Error("Respuesta inv\u00e1lida del servidor");
     PLANTILLAS=normalizarRegistros(arr); pintarCatalogo();
   }catch(err){
+    if(miToken!==tokenCarga) return;
     document.getElementById("errorDetalle").textContent=err.message; mostrarEstado("error");
   }
 }
