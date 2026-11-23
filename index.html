@@ -248,9 +248,9 @@
   .acceso-btn{width:100%;margin-top:16px;height:48px;box-shadow:0 10px 26px rgba(79,70,229,.4)}
 
   /* ═══ SELECCIÓN DE SECCIÓN (Causas / Salas) ═══ */
-  .selector-card{max-width:520px}
+  .selector-card{max-width:680px}
   .selector-opciones{display:flex;gap:14px;margin-top:6px}
-  .selector-opcion{flex:1;display:flex;flex-direction:column;align-items:center;gap:9px;
+  .selector-opcion{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:9px;
     background:rgba(10,18,38,.4);border:1.5px solid rgba(255,255,255,.1);border-radius:16px;
     padding:22px 14px 20px;cursor:pointer;font-family:inherit;color:#F2F4FB;
     transition:.18s var(--e),transform .18s var(--e)}
@@ -259,7 +259,7 @@
   .selector-opcion-texto{font-size:12px;color:#A9B6D6;line-height:1.4;text-align:center}
   .selector-opcion:hover{border-color:#7C8FFF;background:rgba(79,70,229,.14);transform:translateY(-3px)}
   .selector-opcion:hover svg{color:#B7C3FF}
-  @media(max-width:520px){ .selector-opciones{flex-direction:column} }
+  @media(max-width:680px){ .selector-opciones{flex-direction:column} }
 
   /* ═══ MODAL SUBIR ═══ */
   .panel-subir .campo{margin-bottom:18px}
@@ -593,6 +593,11 @@
         <span class="selector-opcion-titulo">Salas</span>
         <span class="selector-opcion-texto">Plantillas y documentos de salas de audiencia.</span>
       </button>
+      <button type="button" class="selector-opcion" data-seccion="relatores">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l5 5v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 16.5h6M9 9.5h3"/></svg>
+        <span class="selector-opcion-titulo">Relatores</span>
+        <span class="selector-opcion-texto">Plantillas y documentos de relatoría.</span>
+      </button>
     </div>
   </div>
 </div>
@@ -654,7 +659,7 @@ const CONFIG = {
 // Versión mínima de Codigo.gs que esta página espera (debe coincidir con
 // CONFIG.VERSION_BACKEND en el Apps Script). Si el backend responde con una
 // versión menor (o sin versión), se avisa en pantalla que hay que actualizarlo.
-const VERSION_FRONTEND_REQUIERE=6;
+const VERSION_FRONTEND_REQUIERE=7;
 function revisarVersionBackend(respuesta){
   const version=(respuesta && typeof respuesta.version==="number")?respuesta.version:0;
   const $av=document.getElementById("avisoBackend");
@@ -1122,7 +1127,7 @@ document.addEventListener("keydown",e=>{
 /* ═══ DATOS / API ═══ */
 let claveSesion="";
 let seccionActual=""; // "causas" o "salas" — elegida en la pantalla de selección
-const NOMBRE_SECCION={ causas:"Causas", salas:"Salas" };
+const NOMBRE_SECCION={ causas:"Causas", salas:"Salas", relatores:"Relatores" };
 function mostrarEstado(estado){
   $cargando.style.display="none";
   $errorCarga.style.display = estado==="error" ? "block" : "none";
